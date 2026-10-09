@@ -96,9 +96,13 @@ filtered_sales = sales[
 # -------------------------------
 # KPI metrics
 # -------------------------------
-st.subheader("Inventory Overview")
 
-col1, col2, col3, col4 = st.columns(4)
+
+
+# Inventory Overview
+st.header("Inventory Overview")
+
+col1, col2, col3, col4, col5 = st.columns(5)
 
 col1.metric(
     "Products Selected",
@@ -107,17 +111,27 @@ col1.metric(
 
 col2.metric(
     "Products to Reorder",
-    int((filtered_inventory["status"].astype(str).str.upper() == "REORDER").sum())
+    int((filtered_inventory["status"] == "REORDER").sum())
 )
 
 col3.metric(
     "Total Units in Stock",
-    f"{filtered_inventory['current_stock'].sum():,.0f}"
+    int(filtered_inventory["current_stock"].sum())
 )
 
 col4.metric(
     "Suggested Units to Order",
-    f"{filtered_inventory['suggested_order_qty'].sum():,.0f}"
+    int(filtered_inventory["suggested_order_qty"].sum())
+)
+
+total_order_cost = (
+    filtered_inventory["suggested_order_qty"]
+    * filtered_inventory["unit_cost"]
+).sum()
+
+col5.metric(
+    "Estimated Purchasing Cost",
+    f"{total_order_cost:,.0f}"
 )
 
 # -------------------------------
