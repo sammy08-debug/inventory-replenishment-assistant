@@ -42,7 +42,7 @@ sales = pd.read_csv(sales_file)
 # -------------------------------
 required_inventory = [
     "sku",
-    "avg_daily_demand",
+    "average_daily_demand",
     "current_stock",
     "lead_time_days",
     "safety_stock",
@@ -136,7 +136,7 @@ display_inventory = filtered_inventory[display_columns].copy()
 
 display_inventory = display_inventory.rename(columns={
     "sku": "Product",
-    "avg_daily_demand": "Avg. Daily Demand",
+    "average_daily_demand": "Avg. Daily Demand",
     "current_stock": "Current Stock",
     "lead_time_days": "Lead Time (Days)",
     "safety_stock": "Safety Stock",
@@ -174,7 +174,12 @@ if not filtered_sales.empty:
         filtered_sales["date"], errors="coerce"
     )
 
-    possible_sales_columns = ["sales", "daily_sales", "units_sold"]
+    possible_sales_columns = [
+    "sales_units",
+    "sales",
+    "daily_sales",
+    "units_sold"
+]
     sales_column = next(
         (col for col in possible_sales_columns if col in filtered_sales.columns),
         None
