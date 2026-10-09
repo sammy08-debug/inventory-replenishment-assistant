@@ -152,6 +152,7 @@ st.dataframe(
     hide_index=True
 )
 
+
 # -------------------------------
 # Inventory chart
 # -------------------------------
@@ -162,7 +163,36 @@ if not filtered_inventory.empty:
         ["current_stock", "reorder_point"]
     ]
 
-    st.bar_chart(chart_data)
+    fig, ax = plt.subplots(figsize=(9, 4))
+
+    x = list(range(len(chart_data)))
+    bar_width = 0.35
+
+    ax.bar(
+        [i - bar_width / 2 for i in x],
+        chart_data["current_stock"],
+        width=bar_width,
+        label="Current Stock"
+    )
+
+    ax.bar(
+        [i + bar_width / 2 for i in x],
+        chart_data["reorder_point"],
+        width=bar_width,
+        label="Reorder Point"
+    )
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(chart_data.index)
+    ax.set_ylabel("Units")
+    ax.set_title("Current Stock vs. Reorder Point by Product")
+    ax.legend()
+    ax.grid(axis="y", alpha=0.25)
+    ax.set_axisbelow(True)
+
+    fig.tight_layout()
+    st.pyplot(fig)
+    plt.close(fig)
 
 # -------------------------------
 # Sales trend chart
