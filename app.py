@@ -121,9 +121,10 @@ col4.metric(
 # -------------------------------
 st.subheader("Replenishment Recommendations")
 
+
 display_columns = [
     "sku",
-    "avg_daily_demand",
+    "average_daily_demand",
     "current_stock",
     "lead_time_days",
     "safety_stock",
