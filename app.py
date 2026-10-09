@@ -173,6 +173,13 @@ display_inventory = display_inventory.rename(columns={
     "estimated_order_cost": "Estimated Order Cost",
     "status": "Recommendation"
 })
+display_inventory["Unit Cost"] = display_inventory["Unit Cost"].map(
+    lambda x: f"{x:,.0f}"
+)
+
+display_inventory["Estimated Order Cost"] = display_inventory[
+    "Estimated Order Cost"
+].map(lambda x: f"{x:,.0f}")
 
 st.dataframe(
     display_inventory,
