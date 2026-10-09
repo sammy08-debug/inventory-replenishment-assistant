@@ -84,6 +84,10 @@ selected_skus = st.sidebar.multiselect(
 filtered_inventory = inventory[
     inventory["sku"].isin(selected_skus)
 ].copy()
+filtered_inventory["estimated_order_cost"] = (
+    filtered_inventory["suggested_order_qty"]
+    * filtered_inventory["unit_cost"]
+)
 
 filtered_sales = sales[
     sales["sku"].isin(selected_skus)
@@ -127,6 +131,7 @@ filtered_inventory["estimated_order_cost"] = (
     * filtered_inventory["unit_cost"]
 )
 
+
 display_columns = [
     "sku",
     "average_daily_demand",
@@ -136,7 +141,7 @@ display_columns = [
     "reorder_point",
     "suggested_order_qty",
     "unit_cost",
-"estimated_order_cost",
+    "estimated_order_cost",
     "status"
 ]
 
@@ -150,9 +155,9 @@ display_inventory = display_inventory.rename(columns={
     "safety_stock": "Safety Stock",
     "reorder_point": "Reorder Point",
     "suggested_order_qty": "Suggested Order Qty",
-    "status": "Recommendation"
     "unit_cost": "Unit Cost",
-"estimated_order_cost": "Estimated Order Cost",
+    "estimated_order_cost": "Estimated Order Cost",
+    "status": "Recommendation"
 })
 
 st.dataframe(
